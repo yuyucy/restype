@@ -1,0 +1,90 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 32px;
+}
+
+.container {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.ctitle {
+    text-align: center;
+    padding: 100px 0;
+    font-size: 72px;
+}
+
+#resourceSection {
+    min-height: 100px;
+    padding: 20px;
+    border: double 5px;
+    border-radius: 20px;
+    background: rgba(0,0,0,.5);
+}
+
+.full-size {
+    width: 100vw;
+    height: 100vh;
+}
+
+.type-section {
+    background: url("./img/back.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+#resourceSection:first-letter{
+    color: red;
+}
+
+.gray-layer {
+    background: rgba(0,0,0,.85);
+}
+
+#countSection {
+    font-size: 32px;
+    text-align: right;
+}
+
+#onKeyView {
+    text-align: center;
+    font-size: 150px;
+    height: 250px;
+}
+
+#onKeyView.correct {
+    color: greenyellow;
+}
+
+#onKeyView.wrong {
+    color: red;
+}
+
+#timerSection {
+    text-align: center;
+    font-size: 72px;
+}
+
+.button {
+    width: 300px;
+    border-radius: 5px;
+}
+
+.main-section {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.js {
+    background: skyblue;
+}
+
+.php {
+    background: orange;
+}
+
+.git {
+    background: #333;
+}
