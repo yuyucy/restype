@@ -1,44 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <script src="app.js"></script>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <div class="type-section full-size">
-      <div class="gray-layer full-size">
-        <div class="container">
-          <div id="page1">
-            <div class="main-section">
-              <h2 class="ctitle">Res Type</h2>
-              <!-- <div id="php">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="app.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Let's challenge PWA</title>
+  <meta name="description" content="PWA のサンプル">
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <!-- Chrome on Android -->
+  <link rel="manifest" href="manifest.json">
+  <!-- Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  19
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="PWA Sample">
+  <link rel="apple-touch-icon" href="images/icon-152x152.png">
+
+</head>
+
+<body>
+  <div class="type-section full-size">
+    <div class="gray-layer full-size">
+      <div class="container">
+        <div id="page1">
+          <div class="main-section">
+            <h2 class="ctitle">Res Type</h2>
+            <!-- <div id="php">
                 <input type="button" value="PHP" class="button php" />
               </div> -->
-              <div id="javascript">
-                <input type="button" value="start" class="button js" />
-              </div>
-              <!-- <div id="git">
+            <div id="javascript">
+              <input type="button" value="start" class="button js" />
+            </div>
+            <!-- <div id="git">
                 <input type="button" value="Git Command" class="button git" />
               </div> -->
-            </div>
           </div>
-          <div id="page2" style="display: none;">
-            <h2 id="categoryTitle" class="ctitle">仮)ｊｓ</h2>
-            <div id="resourceSection">単語表示領域</div>
-            <div id="countSection">
-              <span id="numerator"></span>
-              /
-              <span id="denominator"></span>
-            </div>
-            <div id="onKeyView"></div>
-            <div id="timerSection"></div>
+        </div>
+        <div id="page2" style="display: none;">
+          <h2 id="categoryTitle" class="ctitle">仮)ｊｓ</h2>
+          <div id="resourceSection">単語表示領域</div>
+          <div id="countSection">
+            <span id="numerator"></span>
+            /
+            <span id="denominator"></span>
           </div>
+          <div id="onKeyView"></div>
+          <div id="timerSection"></div>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+  <script src="js.js"></script>
+</body>
+
 </html>
