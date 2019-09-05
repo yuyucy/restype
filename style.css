@@ -37,6 +37,7 @@
     border: solid 4px rgb(225, 248, 250);
     text-align: center;
     width: 400px;
+    max-width: 90%;
     border-radius: 10px;
     margin: 10px;
     color: white;
