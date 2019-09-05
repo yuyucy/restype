@@ -33,7 +33,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/pwa-sample/",
+    "start_url": "/restype/",
     "display": "standalone",
     "background_color": "#c00",
     "theme_color": "#000"
