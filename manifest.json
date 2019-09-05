@@ -3,32 +3,32 @@
     "short_name": "PWA Sample",
     "icons": [
         {
-            "src": "images.jpeg",
+            "src": "img/images.jpeg",
             "sizes": "128x128",
             "type": "image/png"
         },
         {
-            "src": "images.jpeg",
+            "src": "img/images.jpeg",
             "sizes": "144x144",
             "type": "image/png"
         },
         {
-            "src": "images.jpeg",
+            "src": "img/images.jpeg",
             "sizes": "152x152",
             "type": "image/png"
         },
         {
-            "src": "images.jpeg",
+            "src": "img/images.jpeg",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "images.jpeg",
+            "src": "img/images.jpeg",
             "sizes": "256x256",
             "type": "image/png"
         },
         {
-            "src": "images.jpeg",
+            "src": "img/images.jpeg",
             "sizes": "512x512",
             "type": "image/png"
         }
