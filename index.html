@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
     <!-- Chrome on Android -->
     <link rel="manifest" href="manifest.json">
     <!-- Safari on iOS -->
@@ -14,17 +13,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="PWA Sample">
     <link rel="apple-touch-icon" href="images/icon-152x152.png">
-
-</head>
+    <link rel="stylesheet" href="style.css">
+    <script src="./app.js"></script>
 </head>
 
 <body>
-    <div class="gameDisplay">
-        <div class="selectWindow"></div>
-        <div class="textView"></div>
+    <div class="scoreSection">
+        <div id="timeLimit"></div>
+        <div><span id="pairCount"></span><span class="unit">pair</span></div>
     </div>
-    <script src="index.js"></script>
-    <script src="js.js"></script>
+    <div class="flip-boards field"></div>
+    <div class="overlay">
+        <div class="overlayContent"></div>
+    </div>
 </body>
 
 </html>

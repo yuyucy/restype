@@ -1,144 +1,275 @@
 window.onload = () => {
-  const php = document.getElementById("php");
-  const javascript = document.getElementById("javascript");
-  const git = document.getElementById("git");
-  const page1 = document.getElementById("page1");
-  const page2 = document.getElementById("page2");
+  class Sinkei {
+    constructor() {
+      this.initialGame();
+    }
 
+    initialGame() {
+      this.turnCount = 0;
+      this.pairCount = 0;
+      this.firstTurnCard;
+      this.timeLimit = { s: 10, ms: 0 };
+      this.missCount = 0;
+      this.score = 0;
+      this.isSecond = false;
+      this.wait = false;
+      this.deck = this.shuffleCards(this.createCards());
+      this.overlay = document.querySelector(".overlay");
+      this.overlayContent = document.querySelector(".overlayContent");
+      this.distributeCards(this.deck);
+      this.viewLimit();
+      this.viewPairCount();
+      this.overlayContent.innerHTML = "";
+      const gameTitle = this.createEle("div", {
+        classList: ["title", 'result'],
+        text: 'PAiRS'
+      })
+      const startBtn = this.createEle("div", {
+        classList: ["startBtn"],
+        eventList: {
+          click: () => this.startGame()
+        },
+        text: "START"
+      });
+      this.overlayContent.appendChild(gameTitle);
+      this.overlayContent.appendChild(startBtn);
+    }
 
-  let categoryTitle = "javaScript";
-  let resourceArr = ["console.log(0)", "alert(1)", "let hoge () => { alert('hoge') }"];
-
-//   function getSpredSheet(sheetName){
-//     var drId = "ya29.GluyBuOa9CrqHNFidTgi73yeQfYITDfveEgb18W_S09XkCY9tMJkyepafSH3AK7jKFzYIK7i24sFjY2xwAuzn_m1vyJr0eSKMgD34l_jWzowY2uRLIqkmCo4oc04";
-//     var id = "1l_NHPgWRPn3SW3sISYduJlNtuCZ_hwEpCz0KEPxs7EM";
-//     var key = "AIzaSyAoAq0sWyXejYc-eYv9fOm162Z7hoXudmc";
-//     var xhr = new XMLHttpRequest();
-//     xhr.open('GET', `https://sheets.googleapis.com/v4/spreadsheets/${id}/values/${sheetName}!A:A`, false);
-//     xhr.setRequestHeader('Authorization', `Bearer ${drId}`);
-//     xhr.send();
-//     res = (JSON.parse(xhr.response));
-//     var wordArr = [];
-//     for (var key in res.values) {
-//         if(res.values[key].length){
-//             wordArr.push(res.values[key][0]);
-//         }
-//     }
-//     console.log(wordArr)
-//     resourceArr = wordArr;
-//     typeStart();
-// }
-
-  function changePage() {
-    page1.style = "display:none;";
-    page2.style = "display:;";
-  }
-  // php.addEventListener(
-  //   "click",
-  //   function() {
-  //     console.log("php");
-  //     categoryTitle = "PHP";
-  //     changePage();
-  //     // getSpredSheet("php");
-  //     typeStart();
-  //   },
-  //   false
-  // );
-  javascript.addEventListener(
-    "click",
-    function() {
-      console.log("js");
-      categoryTitle = "JavaScript";
-      changePage();
-      // getSpredSheet("JavaScript");
-      typeStart();
-    },
-    false
-  );
-  // git.addEventListener(
-  //   "click",
-  //   function() {
-  //     console.log("git");
-  //     categoryTitle = "git";
-  //     changePage();
-  //     // getSpredSheet("git");
-  //     typeStart();
-  //   },
-  //   false
-  // );
-
-  const typeStart = () => {  
-    const categoryTitleSection = document.querySelector("#categoryTitle");
-    const resourceSection = document.querySelector("#resourceSection");
-    const numeratorSection = document.querySelector("#numerator");
-    const denominatorSection = document.querySelector("#denominator");
-    const onKeyViewSection = document.querySelector("#onKeyView");
-    const timerSection = document.querySelector("#timerSection");
-  
-  
-    let currentIndex = 0;
-    let currentStr = resourceArr[currentIndex];
-  
-    let minutes = 0;
-    let second = 0;
-    let miliSecond = 0;
-  
-    numeratorSection.textContent = currentIndex + 1;
-    resourceSection.innerHTML = currentStr;
-    denominatorSection.textContent = resourceArr.length;
-    categoryTitleSection.textContent = categoryTitle;
-  
-    let typeTimer = setInterval(() => {
-      timeCount();
-    }, 10);
-  
-    document.addEventListener("keydown", event => {
-      let correctStr = getTopStr();
-      if (correctStr === event.key) {
-        deleteStrTop();
-        reloadStr();
-        onKeyViewSection.className = "correct";
-      } else {
-        onKeyViewSection.className = "wrong";
-      }
-      onKeyViewSection.textContent = event.key;
-    });
-  
-    const getTopStr = () => {
-      return currentStr[0];
-    };
-  
-    const deleteStrTop = () => {
-      currentStr = currentStr.slice(1);
-    };
-  
-    const reloadStr = () => {
-      if (currentStr === "") {
-        if (currentIndex === resourceArr.length - 1) {
-          resourceSection.innerHTML = "終了";
-          clearInterval(typeTimer);
+    startGame() {
+      this.hideOverlay();
+      const limit = setInterval(() => {
+        if (this.timeLimit.ms === 0) {
+          this.timeLimit.ms = 99;
+          this.timeLimit.s--;
+          this.viewLimit();
           return;
         }
-        currentIndex++;
-        currentStr = resourceArr[currentIndex];
-        numeratorSection.textContent = currentIndex + 1;
+        this.timeLimit.ms--;
+        this.viewLimit();
+        if (this.timeLimit.s === 0 && this.timeLimit.ms === 0) {
+          clearInterval(limit);
+          document.querySelector("#timeLimit").style.color = "";
+          this.endGame();
+        }
+      }, 10);
+    }
+
+    showOverlay() {
+      this.overlay.style.display = "block";
+    }
+
+    hideOverlay() {
+      this.overlay.style.display = "none";
+    }
+
+    async endGame() {
+      this.overlayContent.innerHTML = "";
+      const endTitle = this.createEle("div", {
+        classList: ["title", "result"],
+        text: "終了"
+      });
+      this.overlayContent.appendChild(endTitle);
+      this.showOverlay();
+
+      await this.timeOut(1000);
+
+      const resultPairCnt = this.createEle("div", {
+        classList: ["resultPairCnt", "result"],
+        html: `${this.pairCount}<span class="unit">pair</span>`
+      });
+      this.overlayContent.appendChild(resultPairCnt);
+
+      await this.timeOut(500);
+
+      const missCnt = this.createEle("div", {
+        classList: ["missCnt", "result"],
+        html: `${this.missCount}<span class="unit">回</span>`
+      });
+      this.overlayContent.appendChild(missCnt);
+      await this.timeOut(500);
+      this.score = this.pairCount * (1000 - this.missCount * 9);
+      const score = this.createEle("div", {
+        classList: ["score", "result"],
+        html: `<span class="unit">score<br></span>0`
+      });
+      this.overlayContent.appendChild(score);
+      let scoreCnt = 0;
+      const scoreLoop = setInterval(() => {
+        if (scoreCnt >= this.score || this.score === 0) {
+          clearInterval(scoreLoop);
+          score.innerHTML = `<span class="unit">score<br></span>${this.score}`;
+          const restartBtn = this.createEle("div", {
+            classList: ["restartBtn"],
+            eventList: {
+              click: () => this.initialGame()
+            },
+            text: "Re:ゼロから始める"
+          });
+          this.overlayContent.appendChild(restartBtn);
+        } else {
+          scoreCnt += 9;
+          score.innerHTML = `<span class="unit">score<br></span>${scoreCnt}`;
+        }
+      }, 1);
+    }
+
+    viewLimit() {
+      const s = String(this.timeLimit.s).padStart(2, "0");
+      const ms = String(this.timeLimit.ms).padStart(2, "0");
+      const timeLimitEle = document.querySelector("#timeLimit");
+      if (this.timeLimit.s < 4) {
+        timeLimitEle.style.color = "red";
       }
-      resourceSection.innerHTML = currentStr;
-    };
-  
-    const timeCount = () => {
-      miliSecond++;
-      if (miliSecond >= 100) {
-        miliSecond = 0;
-        second++;
+      timeLimitEle.innerText = `${s}:${ms}`;
+    }
+
+    viewPairCount() {
+      document.querySelector("#pairCount").innerText = this.pairCount;
+    }
+
+    createCards() {
+      let cards = [];
+      for (let i = 1; i <= 10; i++) {
+        cards.push({ type: "spade", num: i });
+        cards.push({ type: "heart", num: i });
       }
-      if (second >= 60) {
-        second = 0;
-        minutes++;
+      return cards;
+    }
+
+    shuffleCards(cards) {
+      for (let i = cards.length - 1; i >= 0; i--) {
+        const rand = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[rand]] = [cards[rand], cards[i]];
       }
-      timerSection.textContent = `${String(minutes).padStart(2, "0")}:${String(
-        second
-      ).padStart(2, "0")}:${String(miliSecond).padStart(2, "0")}`;
-    };
-  };
+      return cards;
+    }
+
+    distributeCards(deck) {
+      document.querySelector(".field").innerHTML = "";
+      for (const card of deck) {
+        const front = this.createEle("div", {
+          classList: [card.type, "front", "card"],
+          text: card.num
+        });
+        const flipped = this.createEle("div", {
+          classList: ["flipped", "card"]
+        });
+
+        const board = this.createEle("div", {
+          classList: ["board", "left"],
+          childList: [front, flipped],
+          eventList: {
+            click: e => {
+              if (this.wait) {
+                return;
+              }
+              const classList = e.target.parentNode.classList;
+              if (classList.contains("active")) {
+                return;
+              }
+              this.incrementCount();
+              e.target.parentNode.classList.add("active");
+              const frontEle = e.target.previousElementSibling;
+              if (!this.isSecond) {
+                this.isSecond = true;
+                this.firstTurnCard = frontEle;
+                return;
+              }
+              this.isSecond = false;
+              if (frontEle.innerText !== this.firstTurnCard.innerText) {
+                this.firstTurnCard = undefined;
+                const activeCardList = document.querySelectorAll(".active");
+                this.wait = true;
+                setTimeout(() => {
+                  for (const activeCard of activeCardList) {
+                    if (!activeCard.classList.contains("close")) {
+                      activeCard.classList.remove("active");
+                    }
+                  }
+                  this.missCount++;
+                  this.wait = false;
+                }, 300);
+                return;
+              }
+              this.wait = true;
+              setTimeout(() => {
+                frontEle.style.opacity = ".3";
+                frontEle.parentNode.classList.add("close");
+                this.firstTurnCard.style.opacity = ".3";
+                this.firstTurnCard.parentNode.classList.add("close");
+                this.firstTurnCard = undefined;
+                this.pairCount++;
+                this.viewPairCount();
+                this.wait = false;
+              }, 300);
+            }
+          }
+        });
+
+        document.querySelector(".field").appendChild(board);
+      }
+    }
+
+    incrementCount() {
+      this.turnCount++;
+    }
+
+    createEle(eleType, option) {
+      let ele = document.createElement(eleType);
+      if (!option) {
+        return ele;
+      }
+
+      if (option.id) {
+        ele.id = option.id;
+      }
+
+      if (option.classList && option.classList.length) {
+        for (let i = 0, max = option.classList.length; i < max; i++) {
+          ele.classList.add(option.classList[i]);
+        }
+      }
+
+      if (option.attrList) {
+        for (let key in option.attrList) {
+          ele.setAttribute(key, option.attrList[key]);
+        }
+      }
+
+      if (option.styleList) {
+        for (let key in option.styleList) {
+          ele.style[key] = option.styleList[key];
+        }
+      }
+
+      if (option.childList) {
+        for (let i = 0, max = option.childList.length; i < max; i++) {
+          ele.appendChild(option.childList[i]);
+        }
+      }
+
+      if (option.text) {
+        ele.innerText = option.text;
+      }
+
+      if (option.html) {
+        ele.innerHTML = option.html;
+      }
+
+      if (option.eventList) {
+        for (let key in option.eventList) {
+          ele.addEventListener(key, option.eventList[key]);
+        }
+      }
+      return ele;
+    }
+
+    timeOut(ms) {
+      return new Promise(resolve => {
+        setTimeout(resolve, ms);
+      });
+    }
+  }
+
+  new Sinkei();
 };
