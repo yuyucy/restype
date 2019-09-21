@@ -60,7 +60,7 @@ body {
 }
 .flip-boards .board .flipped
 {
-    background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJGWC0if9dv-ejfhiBu-yV4pUEA1WYkc35Qim6BUMslyXC-lgr_w);
+    background: url(img/image.jpg);
     background-size: cover;
     background-position: center;
 }
