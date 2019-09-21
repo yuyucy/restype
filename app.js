@@ -8,7 +8,7 @@ window.onload = () => {
       this.turnCount = 0;
       this.pairCount = 0;
       this.firstTurnCard;
-      this.timeLimit = { s: 10, ms: 0 };
+      this.timeLimit = { s: 60, ms: 0 };
       this.missCount = 0;
       this.score = 0;
       this.isSecond = false;
