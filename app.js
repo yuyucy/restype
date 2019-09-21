@@ -8,7 +8,7 @@ window.onload = () => {
       this.turnCount = 0;
       this.pairCount = 0;
       this.firstTurnCard;
-      this.timeLimit = { s: 60, ms: 0 };
+      this.timeLimit = { s: 30, ms: 0 };
       this.missCount = 0;
       this.score = 0;
       this.isSecond = false;
@@ -169,10 +169,14 @@ window.onload = () => {
               }
               this.incrementCount();
               e.target.parentNode.classList.add("active");
-              const frontEle = e.target.previousElementSibling;
+              const frontEle = e.target.parentNode.querySelector('.front');
+              const flipedEle = e.target.parentNode.querySelector('.flipped');
               if (!this.isSecond) {
                 this.isSecond = true;
                 this.firstTurnCard = frontEle;
+                setTimeout(() => {
+                  flipedEle.style.opacity = '0';
+                },100)
                 return;
               }
               this.isSecond = false;
@@ -181,9 +185,11 @@ window.onload = () => {
                 const activeCardList = document.querySelectorAll(".active");
                 this.wait = true;
                 setTimeout(() => {
+                  flipedEle.style.opacity = '0';
                   for (const activeCard of activeCardList) {
                     if (!activeCard.classList.contains("close")) {
                       activeCard.classList.remove("active");
+                      activeCard.querySelector('.flipped').style.opacity = '1'
                     }
                   }
                   this.missCount++;
@@ -193,6 +199,7 @@ window.onload = () => {
               }
               this.wait = true;
               setTimeout(() => {
+                flipedEle.style.opacity = '0';
                 frontEle.style.opacity = ".3";
                 frontEle.parentNode.classList.add("close");
                 this.firstTurnCard.style.opacity = ".3";

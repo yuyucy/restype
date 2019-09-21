@@ -57,6 +57,7 @@ body {
     font-size: calc((100vh - 70px) / 20);
     line-height: calc((100vh - 70px) * 0.9 / 5 );
     color: #333;
+    background:white;
 }
 .flip-boards .board .flipped
 {
